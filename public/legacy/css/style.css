@@ -20,7 +20,7 @@ h2{ font-size: 36px; }
 h3{ font-size: 30px; }
 h4{ font-size: 24px; }
 h5{ font-size: 18px; }
-h5{ font-size: 12px; font-weight: 700; }
+h6{ font-size: 12px; font-weight: 700; }
 a, a:visited{ color: #151515;}   /*링크에 방문1회이상*/
 a:hover{color: #00abd6;}        /*마우스 오버*/
 b, strong{font-weight: 600;}
@@ -50,7 +50,7 @@ hr{width: 40px; height: 1px; background: #999;	outline: none;	border:none; margi
 a, b, div, ul, li{-webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-tap-highlight-color: transparent;}
 embed, object, video {max-width: 100%; height: auto;}
 
-<!-- 초기화 영역 끝-->
+/* 초기화 영역 끝 */
 html,body,div,span,object,applet,iframe,p,blockquote,pre,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0; padding:0; border:0; font:inherit; vertical-align:baseline;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {  display: block; }
 a{text-decoration:none;}
@@ -65,9 +65,9 @@ li img, dd img { vertical-align:top; }
 
 #intro-wrap{position:absolute; width:100%; height:100%; text-align:center; z-index:5;}
 .intro{position:absolute; width:100%; height:100%; z-index:5; background:#00FFCB;}
-<!-- 초기화 영역 끝-->
+/* 초기화 영역 끝 */
 
-<!--homa-page 레이아웃-->
+/* home-page 레이아웃 */
 .home-page{position:absolute; width:100%; height:100%; left:0; top:0; background:#e2e3e2; z-index:99 !important;}
 .line{display:block; width:100%; height:1px; bottom:0; left:0; background:#eaeaea; background:rgba(0,0,0, .9); z-index:100;}
 .right-screen{display:table; width:100%; height:100%; right:0; top:0; background:#FFFFFF;}
@@ -499,7 +499,6 @@ li img, dd img { vertical-align:top; }
 	/*.icon-menu{display:none;}
      #home-wrap{box-sizing:border-box; border:4px solid #252424; width:100%; position:absolute; z-index:99; background:#FFFFFF; overflow:hidden; transition:all 0.3s ease-out;}	*/
 }
-
 
 
 

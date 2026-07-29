@@ -12,6 +12,7 @@ jQuery 동작은 `public/legacy`에서 보존하고 React 진입점이 이를 �
 - 기존 웹 프로젝트와 이미지 갤러리 경로 유지
 - React 진입점에서 원본 마크업과 자산 경로 로딩
 - 데스크톱과 모바일 원본 반응형 레이아웃 유지
+- Tailwind CSS 4 기반의 React 로딩·오류 UI와 신규 스타일
 - favicon, description, Open Graph, Twitter Card 메타데이터
 - 원본 페이지와 모든 정적 자산 별도 보존
 
@@ -21,7 +22,7 @@ jQuery 동작은 `public/legacy`에서 보존하고 React 진입점이 이를 �
 | --- | --- |
 | UI | React 19 |
 | 개발 서버·빌드 | Vite 8 |
-| 스타일 | 2015년 원본 CSS |
+| 스타일 | Tailwind CSS 4 + 2015년 원본 호환 레이어 |
 | 코드 품질 | ESLint 10, React Hooks 규칙 |
 | 인터랙션 | 원본 jQuery, scrollTo, Magnific Popup |
 
@@ -68,8 +69,8 @@ npm run preview
 │   └── legacy/               # 2015년 원본 사이트와 프로젝트
 ├── src/
 │   ├── App.jsx               # 원본 마크업 로더와 경로 변환
-│   ├── legacy-bridge.css     # React 루트 연결에 필요한 최소 스타일
 │   ├── main.jsx              # React 진입점
+│   └── tailwind.css          # Tailwind 테마와 유틸리티 진입점
 ├── eslint.config.js
 ├── index.html                # Vite HTML 및 SEO/소셜 메타데이터
 ├── package.json
@@ -80,7 +81,12 @@ npm run preview
 
 화면 콘텐츠와 디자인은 `public/legacy/index.html`과
 `public/legacy/css/style.css`에서 관리합니다. 원본과 동일한 디자인을 유지해야
-하므로 React 쪽에 별도의 레이아웃이나 디자인 시스템을 추가하지 않습니다.
+하므로 기존 화면은 원본 CSS를 호환 레이어로 유지합니다. React 로딩·오류
+상태와 새 UI는 Tailwind 유틸리티로 작성합니다.
+
+Tailwind의 Preflight는 원본 reset CSS와 충돌해 픽셀 차이를 만들 수 있으므로
+의도적으로 제외했습니다. 앞으로 기존 화면을 옮길 때는 한 컴포넌트씩
+Tailwind로 전환하고 데스크톱·모바일 비교를 통과한 뒤 원본 규칙을 제거합니다.
 
 `src/App.jsx`는 원본 문서를 불러오고 정적 자산 경로를 `/legacy` 기준으로
 변환한 뒤, 기존 스크립트를 원래 순서대로 로드합니다.
@@ -107,3 +113,6 @@ Netlify, Vercel, Cloudflare Pages, GitHub Pages 등에서 빌드 명령은
 
 마이그레이션 배경과 유지보수 원칙은
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)를 참고하세요.
+
+수정된 결함과 회귀 검사 항목은
+[`docs/QA.md`](docs/QA.md)를 참고하세요.

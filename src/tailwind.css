@@ -1,0 +1,11 @@
+/*
+ * Tailwind owns the React shell and all new UI. Preflight is intentionally
+ * omitted because the archived 2015 stylesheet includes its own reset and
+ * must remain pixel-identical while the legacy presentation is migrated.
+ */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --color-portfolio-ink: #151515;
+}

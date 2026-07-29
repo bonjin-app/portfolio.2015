@@ -90,20 +90,25 @@ export default function App() {
 
   if (error) {
     return (
-      <main className="legacy-load-error">
-        <h1>PORTFOLIO</h1>
-        <p>{error}</p>
+      <main className="grid min-h-screen place-content-center bg-portfolio-ink text-center text-white">
+        <h1 className="m-0 font-sans text-[2rem]">PORTFOLIO</h1>
+        <p className="font-sans text-sm text-[#aaa]">{error}</p>
       </main>
     )
   }
 
   if (!markup) {
-    return <div className="legacy-loading" aria-label="포트폴리오 불러오는 중" />
+    return (
+      <div
+        className="h-screen w-full bg-portfolio-ink"
+        aria-label="포트폴리오 불러오는 중"
+      />
+    )
   }
 
   return (
     <div
-      className="legacy-root"
+      className="min-h-full"
       dangerouslySetInnerHTML={{ __html: markup }}
     />
   )

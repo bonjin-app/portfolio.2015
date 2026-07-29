@@ -1,12 +1,12 @@
 $(document).ready(function(e) {
 	
-	/*모바일에선 모바일웹으로 보여지게*/
-	$('.moweb').click(function () {
-	  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ){ 
-       window.open('about:blank').location.href ="http://geniuschoi.dothome.co.kr/html/Web_renew_m/index.html";
-	   return false;
-       }
-    });
+	/*모바일에선 보존된 모바일웹으로 연결*/
+	if (
+	  /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ||
+	  window.matchMedia('(max-width: 767px)').matches
+	) {
+	  $('.moweb').attr('href', '/legacy/html/Web_renew_m/index.html');
+	}
 	  
 	  
   $("html,body").animate({scrollTop: 0}, 1000);  //새로고침시 처음으로
@@ -37,7 +37,7 @@ $(function(){
 	 /*overlay 클릭시 animate*/
 	 $(".icon-overlay").click(function(){
 	  if($(".left-side").hasClass("o-screen")){
-		  $(".left-side").animate({
+		  $(".left-side").stop(true).animate({
              left: "-350px"
             },500);
 			$(".icon-overlay").fadeOut();
@@ -47,7 +47,7 @@ $(function(){
 	 });
 	 /*메뉴클릭시 animate*/
 	 $(".lt-1").click(function(){
-		  $(".left-side").animate({
+		  $(".left-side").stop(true).animate({
 			 left: 0 
 		  },500);
 		  $(".icon-overlay").fadeIn();
@@ -59,7 +59,7 @@ $(function(){
 	/*스크롤시 메뉴 animate*/
 	$(window).scroll(function(){
         if ($(".left-side").hasClass("o-screen")) {
-            $(".left-side").animate({
+            $(".left-side").stop(true).animate({
                 left: "-350px"
             },500);
 			$(".icon-overlay").fadeOut();
@@ -69,7 +69,6 @@ $(function(){
     });	
 	
 	
-	  var home_position = $("#home").offset().top +700;
 	  var about_position =$("#about").offset().top-100;
 	  var works_position =$("#works").offset().top-100;
 	  var contact_position = $("#contact").offset().top-180;
@@ -83,17 +82,17 @@ $(function(){
 		 /*스크롤 변경함수*/				 
 		 
 		 /*side menu bar생성 함수*/
-		 if(position > 0 && position < home_position){
+		 if(position < about_position){
 			 $(".side-menu ul li").removeClass('active');
 			 $(".side-menu ul li").find('a').removeClass('active');
 		 }
-		 else if(position > about_position && position < works_position){
+		 else if(position < works_position){
 			 $(".side-menu ul li").removeClass('active');
 			 $(".side-menu ul li").find('a').removeClass('active');
-			 $(".gnb2").addClass('on');
+			 $(".gnb2").addClass('active');
 			 $(".gnb2").find('a').addClass('active');
 		 }
-		 else if(position > works_position && position < contact_position){
+		 else if(position < contact_position){
 			 $(".side-menu ul li").removeClass('active');
 			 $(".side-menu ul li").find('a').removeClass('active');
 			 $(".gnb3").addClass('active');
@@ -237,9 +236,7 @@ $(function(){
 	  });
 
 	 /*image slide*/
-	            var timer = null;
 				var active = 0;
-				var isFirst = true;
 				var imgSlider = {
 					init : function(){
 						imgSlider.play();
@@ -264,13 +261,9 @@ $(function(){
 							
 					},
 					play : function(){
-						if(active <= 0) active = 2;
-						isFirst = false;
-						if(isFirst) active = imgSlider.active + 1;
-						timer = setInterval(function(){
+						setInterval(function(){
+							active = (imgSlider.fn_active() + 1) % imgSlider.sliderCount();
 							imgSlider.slide();
-							isFirst = false;
-							active++;
 							}, 3000);
 					}
 				}
@@ -402,7 +395,6 @@ $(function(){
 		return false;
 	});	
 });
-
 
 
 
