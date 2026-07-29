@@ -7,9 +7,8 @@ $(document).ready(function(e) {
 	) {
 	  $('.moweb').attr('href', '/legacy/html/Web_renew_m/index.html');
 	}
-	  
-	  
-  $("html,body").animate({scrollTop: 0}, 1000);  //새로고침시 처음으로
+
+	// 브라우저의 스크롤 복원을 유지해 새로고침 직후 사용자 입력과 충돌하지 않게 한다.
 });
 
 
@@ -395,7 +394,6 @@ $(function(){
 		return false;
 	});	
 });
-
 
 
 

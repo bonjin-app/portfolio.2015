@@ -13,11 +13,13 @@
 | 진명홈바스 | 외부 HTTP 주소에 의존 | 저장소에 보존된 정적 사이트로 연결 |
 | 이미지 로더 | 존재하지 않는 `loader.gif`가 운영에서 404 발생 | 사용되지 않는 배경 요청 제거 |
 | About 진입 | React 래퍼 높이가 없어 `top: 100%`가 약 52px로 계산되고 첫 화면 뒤에 겹침 | 루트와 래퍼 높이를 뷰포트 100%로 고정 |
+| 새로고침 직후 스크롤 | 1초 동안 상단으로 이동하는 jQuery 애니메이션이 사용자 휠 입력을 취소 | 브라우저의 기본 스크롤 복원을 유지하고 강제 초기화 제거 |
 | HTML/CSS 문법 | viewport 중복·오타, CSS 안의 HTML 주석, h6 크기 오타 | 유효한 메타 태그와 CSS 문법으로 정리 |
 
 ## 배포 전 검사
 
 ```bash
+npm test
 npm run lint
 npm run build
 node --check public/legacy/js/script.js
@@ -30,6 +32,7 @@ git diff --check
 - 390×844: 원본 모바일 레이아웃과 메뉴 확인
 - AutoCamping: 모바일 정적 페이지가 새 탭에서 열리는지 확인
 - 사이드 메뉴: About, Works, Contact 활성 상태 확인
+- 새로고침 직후 바로 휠을 움직여도 입력한 위치가 유지되는지 확인
 - JSP 로그인 갤러리: 1 of 7로 열리고 `login1.jpg`부터 시작하는지 확인
 
 초기 화면의 유일한 시간 의존 요소는 아래 화살표의 jQuery opacity
