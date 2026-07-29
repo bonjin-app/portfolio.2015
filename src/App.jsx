@@ -108,7 +108,7 @@ export default function App() {
 
   return (
     <div
-      className="min-h-full"
+      className="h-full min-h-full"
       dangerouslySetInnerHTML={{ __html: markup }}
     />
   )
