@@ -9,7 +9,7 @@
 ## 렌더링 흐름
 
 1. Vite의 `index.html`이 React 진입점을 실행합니다.
-2. Vite가 `public/legacy/index.html`을 가상 모듈로 빌드 결과에 포함합니다.
+2. Vite가 `src/legacy-index.html`을 raw 모듈로 빌드 결과에 포함합니다.
 3. `src/main.jsx`가 `src/legacy.js`를 통해 포함된 원본 문서를 읽습니다.
 4. 원본 마크업의 상대 이미지와 링크 경로를 `/legacy` 기준으로 변환합니다.
 5. 브라우저 `load` 전에 변환을 끝내고 React 루트에 동기적으로 렌더링합니다.
@@ -19,7 +19,7 @@
 ```mermaid
 flowchart LR
   Browser["브라우저"] --> Vite["Vite index.html"]
-  Vite --> Bundle["원본 HTML 가상 모듈"]
+  Vite --> Bundle["원본 HTML raw 모듈"]
   Bundle --> Loader["선행 원본 로더"]
   Loader --> Markup["원본 HTML"]
   Loader --> React["React App"]
@@ -31,7 +31,7 @@ flowchart LR
 ## 파일 역할
 
 - `index.html`: 메타데이터, 원본 CSS와 React 진입점
-- `vite.config.js`: 원본 HTML을 빌드 결과에 포함하는 가상 모듈
+- `src/legacy-index.html`: 빌드에 포함되는 원본 HTML 미러
 - `src/main.jsx`: 포함된 원본 마크업 준비와 React 동기 마운트
 - `src/legacy.js`: 원본 문서 파싱과 자산 경로 변환
 - `src/App.jsx`: 준비된 원본 화면과 레거시 스크립트 로딩
@@ -69,9 +69,13 @@ flowchart LR
 
 React가 마운트된 뒤 원본 HTML을 네트워크로 가져오면 브라우저 `load` 직후 문서 높이가
 한 화면뿐이어서 사용자의 첫 스크롤 입력이 사라질 수 있습니다. 현재 진입점은
-Vite 가상 모듈로 원본 HTML을 JavaScript 번들에 포함하고 `flushSync`로 React를
+Vite raw 모듈로 원본 HTML을 JavaScript 번들에 포함하고 `flushSync`로 React를
 마운트해, `load` 시점에 About·Works·Contact를 포함한 전체 문서 높이를
 확보합니다. 원본 화면 준비에는 별도 네트워크 왕복이 없습니다.
+
+`src/legacy-index.html`은 공개 기준 파일인 `public/legacy/index.html`과 동일해야
+합니다. `tests/polish.test.mjs`가 두 파일의 완전 일치를 검사해 한쪽만 수정되는
+문제를 막습니다.
 
 페이지 준비 이후에는 원본 앵커 애니메이션을 유지하지만 새로고침 시 강제로
 상단으로 이동하지 않습니다.

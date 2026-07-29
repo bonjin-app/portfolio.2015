@@ -1,4 +1,4 @@
-import legacyDocument from 'virtual:legacy-portfolio-markup'
+import legacyDocument from './legacy-index.html?raw'
 
 function prefixLegacyPath(value) {
   if (

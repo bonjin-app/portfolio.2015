@@ -76,6 +76,7 @@ npm run preview
 │   └── legacy/               # 2015년 원본 사이트와 프로젝트
 ├── src/
 │   ├── App.jsx               # 원본 화면과 스크립트 실행
+│   ├── legacy-index.html     # 빌드에 포함되는 원본 HTML 미러
 │   ├── legacy.js             # 원본 마크업 로딩과 경로 변환
 │   ├── main.jsx              # 선행 로딩 후 React를 마운트하는 진입점
 │   └── tailwind.css          # Tailwind 테마와 유틸리티 진입점
@@ -99,10 +100,11 @@ Tailwind의 Preflight는 원본 reset CSS와 충돌해 픽셀 차이를 만들 �
 의도적으로 제외했습니다. 앞으로 기존 화면을 옮길 때는 한 컴포넌트씩
 Tailwind로 전환하고 데스크톱·모바일 비교를 통과한 뒤 원본 규칙을 제거합니다.
 
-Vite는 원본 문서를 가상 모듈로 빌드 결과에 포함합니다. `src/legacy.js`는
-포함된 문서의 정적 자산 경로를 `/legacy` 기준으로 변환하고, `src/main.jsx`는
-이 작업을 브라우저 load 전에 끝낸 뒤 React를 마운트합니다. `src/App.jsx`는
-준비된 화면을 렌더링하고 기존 스크립트를 원래 순서대로 로드합니다.
+Vite는 원본 문서의 빌드용 미러를 raw 모듈로 결과에 포함합니다.
+`src/legacy.js`는 포함된 문서의 정적 자산 경로를 `/legacy` 기준으로 변환하고,
+`src/main.jsx`는 이 작업을 브라우저 load 전에 끝낸 뒤 React를 마운트합니다.
+`src/App.jsx`는 준비된 화면을 렌더링하고 기존 스크립트를 원래 순서대로
+로드합니다.
 
 ## 배포
 
