@@ -16,7 +16,7 @@
 - 390px 모바일 가로 오버플로 0px
 - Cloudflare Workers build 성공
 
-운영 URL은 [portfolio2025.uulab.co.kr](https://portfolio2025.uulab.co.kr/)입니다.
+운영 URL은 [portfolio2015.uulab.co.kr](https://portfolio2015.uulab.co.kr/)입니다.
 
 ## 자동 검사
 

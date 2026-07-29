@@ -3,7 +3,7 @@
 2015년에 제작한 포트폴리오의 화면과 인터랙션을 보존하면서 실행 환경을
 React 19, Vite 8, Tailwind CSS 4로 옮긴 정적 아카이브입니다.
 
-- 운영 사이트: [portfolio2025.uulab.co.kr](https://portfolio2025.uulab.co.kr/)
+- 운영 사이트: [portfolio2015.uulab.co.kr](https://portfolio2015.uulab.co.kr/)
 - 기본 브랜치: `main`
 - 배포 방식: GitHub push → Cloudflare Workers Builds
 

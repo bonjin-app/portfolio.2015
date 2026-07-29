@@ -60,7 +60,7 @@ gh api "repos/bonjin-app/portfolio.2015/commits/${COMMIT_SHA}/check-runs" \
 
 ## 4. 운영 스모크 테스트
 
-[운영 사이트](https://portfolio2025.uulab.co.kr/)에서 다음을 확인합니다.
+[운영 사이트](https://portfolio2015.uulab.co.kr/)에서 다음을 확인합니다.
 
 1. Home 첫 화면이 원본 2분할 디자인으로 표시됩니다.
 2. 새로고침 직후 바로 스크롤할 수 있습니다.
@@ -110,7 +110,7 @@ npm 10.9.2에서 생성된 lockfile을 함께 커밋합니다.
 새 시크릿 창에서 운영 URL을 열거나 쿼리 문자열을 붙여 캐시를 우회합니다.
 
 ```text
-https://portfolio2025.uulab.co.kr/?verify=<commit>
+https://portfolio2015.uulab.co.kr/?verify=<commit>
 ```
 
 Network에서 새 `assets/index-*.js` 해시가 로드되는지 확인합니다.

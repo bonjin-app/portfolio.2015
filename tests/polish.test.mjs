@@ -29,6 +29,7 @@ test('legacy markup is bundled and ready before React mounts', async () => {
 
 test('main portfolio exposes landmarks and named icon controls', async () => {
   const source = await readProjectFile('public/legacy/index.html')
+  const entryDocument = await readProjectFile('index.html')
 
   assert.match(source, /<main class="page-sections">/)
   assert.match(source, /class="side-logo" aria-label="홈으로 이동"/)
@@ -36,6 +37,11 @@ test('main portfolio exposes landmarks and named icon controls', async () => {
   assert.match(source, /class="lt-2" aria-label="화면 상단으로 이동"/)
   assert.match(source, /COPYRIGHT &copy; 2015/)
   assert.doesNotMatch(source, /COPYLIGHT/)
+  assert.match(
+    entryDocument,
+    /<link rel="canonical" href="https:\/\/portfolio2015\.uulab\.co\.kr\/" \/>/,
+  )
+  assert.doesNotMatch(entryDocument, /portfolio2025/)
 })
 
 test('mobile AutoCamping references existing restored assets', async () => {

@@ -98,7 +98,7 @@ Tailwind 유틸리티를 사용합니다.
 | 항목 | 값 |
 | --- | --- |
 | title | `PORTFOLIO` |
-| canonical | `https://portfolio2025.uulab.co.kr/` |
+| canonical | `https://portfolio2015.uulab.co.kr/` |
 | favicon | `/favicon.png` |
 | Open Graph image | `/legacy/images/responsive.jpg`의 운영 절대 URL |
 | theme color | `#11120f` |
