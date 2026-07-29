@@ -11,7 +11,9 @@ jQuery 동작은 `public/legacy`에서 보존하고 React 진입점이 이를 �
 - 원본 스크롤 이동, 이미지 슬라이드, 반응형 메뉴와 갤러리 보존
 - 기존 웹 프로젝트와 이미지 갤러리 경로 유지
 - React 진입점에서 원본 마크업과 자산 경로 로딩
+- 브라우저 load 전에 원본 마크업을 준비해 첫 스크롤 입력 보존
 - 데스크톱과 모바일 원본 반응형 레이아웃 유지
+- 누락된 AutoCamping 모바일 자산을 보존된 원본 이미지로 복원
 - Tailwind CSS 4 기반의 React 로딩·오류 UI와 신규 스타일
 - favicon, description, Open Graph, Twitter Card 메타데이터
 - 원본 페이지와 모든 정적 자산 별도 보존
@@ -51,6 +53,9 @@ npm run dev
 # ESLint 검사
 npm run lint
 
+# 회귀 테스트
+npm test
+
 # 프로덕션 빌드
 npm run build
 
@@ -70,9 +75,13 @@ npm run preview
 │   ├── favicon.png
 │   └── legacy/               # 2015년 원본 사이트와 프로젝트
 ├── src/
-│   ├── App.jsx               # 원본 마크업 로더와 경로 변환
-│   ├── main.jsx              # React 진입점
+│   ├── App.jsx               # 원본 화면과 스크립트 실행
+│   ├── legacy.js             # 원본 마크업 로딩과 경로 변환
+│   ├── main.jsx              # 선행 로딩 후 React를 마운트하는 진입점
 │   └── tailwind.css          # Tailwind 테마와 유틸리티 진입점
+├── tests/
+│   ├── polish.test.mjs       # 자산·접근성·선행 로딩 회귀 검사
+│   └── scroll-reset.test.mjs # 강제 스크롤 초기화 방지 검사
 ├── eslint.config.js
 ├── index.html                # Vite HTML 및 SEO/소셜 메타데이터
 ├── package.json
@@ -90,8 +99,10 @@ Tailwind의 Preflight는 원본 reset CSS와 충돌해 픽셀 차이를 만들 �
 의도적으로 제외했습니다. 앞으로 기존 화면을 옮길 때는 한 컴포넌트씩
 Tailwind로 전환하고 데스크톱·모바일 비교를 통과한 뒤 원본 규칙을 제거합니다.
 
-`src/App.jsx`는 원본 문서를 불러오고 정적 자산 경로를 `/legacy` 기준으로
-변환한 뒤, 기존 스크립트를 원래 순서대로 로드합니다.
+`src/legacy.js`는 원본 문서를 불러오고 정적 자산 경로를 `/legacy` 기준으로
+변환합니다. `src/main.jsx`는 이 작업을 브라우저 load 전에 끝낸 뒤 React를
+마운트합니다. `src/App.jsx`는 준비된 화면을 렌더링하고 기존 스크립트를 원래
+순서대로 로드합니다.
 
 ## 배포
 
@@ -100,6 +111,7 @@ Tailwind로 전환하고 데스크톱·모바일 비교를 통과한 뒤 원본 
 
 ```bash
 npm ci
+npm test
 npm run lint
 npm run build
 ```

@@ -7,37 +7,6 @@ const legacyScripts = [
   '/legacy/js/script.js',
 ]
 
-function prefixLegacyPath(value) {
-  if (
-    !value ||
-    value.startsWith('#') ||
-    value.startsWith('/') ||
-    value.startsWith('http:') ||
-    value.startsWith('https:') ||
-    value.startsWith('mailto:') ||
-    value.startsWith('tel:') ||
-    value.startsWith('data:')
-  ) {
-    return value
-  }
-
-  return `/legacy/${value}`
-}
-
-function prepareLegacyMarkup(html) {
-  const documentFragment = new DOMParser().parseFromString(html, 'text/html')
-
-  documentFragment.querySelectorAll('[src]').forEach((element) => {
-    element.setAttribute('src', prefixLegacyPath(element.getAttribute('src')))
-  })
-
-  documentFragment.querySelectorAll('[href]').forEach((element) => {
-    element.setAttribute('href', prefixLegacyPath(element.getAttribute('href')))
-  })
-
-  return documentFragment.body.innerHTML
-}
-
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script')
@@ -49,31 +18,9 @@ function loadScript(src) {
   })
 }
 
-export default function App() {
-  const [markup, setMarkup] = useState('')
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    let active = true
-
-    fetch('/legacy/index.html')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Legacy portfolio returned ${response.status}`)
-        }
-        return response.text()
-      })
-      .then((html) => {
-        if (active) setMarkup(prepareLegacyMarkup(html))
-      })
-      .catch((fetchError) => {
-        if (active) setError(fetchError.message)
-      })
-
-    return () => {
-      active = false
-    }
-  }, [])
+export default function App({ initialMarkup = '', initialError = '' }) {
+  const [markup] = useState(initialMarkup)
+  const [error, setError] = useState(initialError)
 
   useEffect(() => {
     if (!markup || window.__portfolio2015ScriptsLoaded) return
@@ -99,8 +46,9 @@ export default function App() {
 
   if (!markup) {
     return (
-      <div
+      <main
         className="h-screen w-full bg-portfolio-ink"
+        aria-busy="true"
         aria-label="포트폴리오 불러오는 중"
       />
     )
