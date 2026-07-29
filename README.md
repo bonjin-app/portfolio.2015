@@ -31,14 +31,16 @@ jQuery 동작은 `public/legacy`에서 보존하고 React 진입점이 이를 �
 요구 환경:
 
 - Node.js 20.19 이상 또는 22.12 이상
-- npm 10 이상
+- npm 10.9.2 (`packageManager`에 고정)
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 개발 서버는 기본적으로 `http://localhost:5173`에서 실행됩니다.
+의존성을 변경할 때만 npm 10.9.2에서 `npm install`을 실행하고,
+변경된 `package-lock.json`을 함께 커밋합니다.
 
 ## 명령어
 
@@ -97,6 +99,7 @@ Tailwind로 전환하고 데스크톱·모바일 비교를 통과한 뒤 원본 
 배포하면 됩니다.
 
 ```bash
+npm ci
 npm run lint
 npm run build
 ```
