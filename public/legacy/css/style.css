@@ -41,7 +41,7 @@ hr{width: 40px; height: 1px; background: #999;	outline: none;	border:none; margi
 .right{float:right;}
 .relative{position:relative;}
 .hidden{display:none;}
-.img{width: 100%; height: auto;	background: url(../images/loader.gif) no-repeat 50% 50%;}
+.img{width: 100%; height: auto;}
 ::-webkit-selection{ color: #fff;	background:#00abd6; }   /*텍스트 드레그 했을때*/
 .animate, .animate *{-webkit-transition: all 0.37s cubic-bezier(0.45, 0, 0.58, 1);}
 .no-animate, .no-animate *{	-webkit-transition: 0 none !important; }
@@ -499,7 +499,6 @@ li img, dd img { vertical-align:top; }
 	/*.icon-menu{display:none;}
      #home-wrap{box-sizing:border-box; border:4px solid #252424; width:100%; position:absolute; z-index:99; background:#FFFFFF; overflow:hidden; transition:all 0.3s ease-out;}	*/
 }
-
 
 
 
