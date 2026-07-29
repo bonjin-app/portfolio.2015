@@ -1,3 +1,5 @@
+import legacyDocument from 'virtual:legacy-portfolio-markup'
+
 function prefixLegacyPath(value) {
   if (
     !value ||
@@ -29,12 +31,6 @@ export function prepareLegacyMarkup(html) {
   return documentFragment.body.innerHTML
 }
 
-export async function loadLegacyMarkup() {
-  const response = await fetch('/legacy/index.html')
-
-  if (!response.ok) {
-    throw new Error(`Legacy portfolio returned ${response.status}`)
-  }
-
-  return prepareLegacyMarkup(await response.text())
+export function loadLegacyMarkup() {
+  return prepareLegacyMarkup(legacyDocument)
 }

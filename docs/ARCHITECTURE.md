@@ -9,16 +9,18 @@
 ## 렌더링 흐름
 
 1. Vite의 `index.html`이 React 진입점을 실행합니다.
-2. `src/main.jsx`가 `src/legacy.js`를 통해 `/legacy/index.html`을 읽습니다.
-3. 원본 마크업의 상대 이미지와 링크 경로를 `/legacy` 기준으로 변환합니다.
-4. 브라우저 `load` 전에 변환을 끝내고 React 루트에 동기적으로 렌더링합니다.
-5. `src/App.jsx`가 jQuery, scrollTo, Magnific Popup과 원본 `script.js`를 순서대로 로드합니다.
-6. React 오류 상태와 신규 UI는 Tailwind CSS 유틸리티로 렌더링합니다.
+2. Vite가 `public/legacy/index.html`을 가상 모듈로 빌드 결과에 포함합니다.
+3. `src/main.jsx`가 `src/legacy.js`를 통해 포함된 원본 문서를 읽습니다.
+4. 원본 마크업의 상대 이미지와 링크 경로를 `/legacy` 기준으로 변환합니다.
+5. 브라우저 `load` 전에 변환을 끝내고 React 루트에 동기적으로 렌더링합니다.
+6. `src/App.jsx`가 jQuery, scrollTo, Magnific Popup과 원본 `script.js`를 순서대로 로드합니다.
+7. React 오류 상태와 신규 UI는 Tailwind CSS 유틸리티로 렌더링합니다.
 
 ```mermaid
 flowchart LR
   Browser["브라우저"] --> Vite["Vite index.html"]
-  Vite --> Loader["선행 원본 로더"]
+  Vite --> Bundle["원본 HTML 가상 모듈"]
+  Bundle --> Loader["선행 원본 로더"]
   Loader --> Markup["원본 HTML"]
   Loader --> React["React App"]
   React --> Tailwind["Tailwind UI 상태"]
@@ -29,8 +31,9 @@ flowchart LR
 ## 파일 역할
 
 - `index.html`: 메타데이터, 원본 CSS와 React 진입점
-- `src/main.jsx`: 원본 마크업 선행 로딩과 React 동기 마운트
-- `src/legacy.js`: 원본 문서 로딩과 자산 경로 변환
+- `vite.config.js`: 원본 HTML을 빌드 결과에 포함하는 가상 모듈
+- `src/main.jsx`: 포함된 원본 마크업 준비와 React 동기 마운트
+- `src/legacy.js`: 원본 문서 파싱과 자산 경로 변환
 - `src/App.jsx`: 준비된 원본 화면과 레거시 스크립트 로딩
 - `src/tailwind.css`: Tailwind 테마와 유틸리티 진입점
 - `public/legacy/index.html`: 화면과 콘텐츠의 기준 원본
@@ -64,10 +67,11 @@ flowchart LR
 
 ## 선행 로딩과 스크롤
 
-React가 마운트된 뒤 원본 HTML을 가져오면 브라우저 `load` 직후 문서 높이가
+React가 마운트된 뒤 원본 HTML을 네트워크로 가져오면 브라우저 `load` 직후 문서 높이가
 한 화면뿐이어서 사용자의 첫 스크롤 입력이 사라질 수 있습니다. 현재 진입점은
-top-level await로 원본 마크업을 먼저 준비하고 `flushSync`로 React를 마운트해,
-`load` 시점에 About·Works·Contact를 포함한 전체 문서 높이를 확보합니다.
+Vite 가상 모듈로 원본 HTML을 JavaScript 번들에 포함하고 `flushSync`로 React를
+마운트해, `load` 시점에 About·Works·Contact를 포함한 전체 문서 높이를
+확보합니다. 원본 화면 준비에는 별도 네트워크 왕복이 없습니다.
 
 페이지 준비 이후에는 원본 앵커 애니메이션을 유지하지만 새로고침 시 강제로
 상단으로 이동하지 않습니다.

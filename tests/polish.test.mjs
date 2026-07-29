@@ -10,15 +10,24 @@ async function readProjectFile(path) {
   return readFile(resolve(projectRoot, path), 'utf8')
 }
 
-test('legacy markup is ready before React mounts', async () => {
+test('legacy markup is bundled and ready before React mounts', async () => {
   const mainSource = await readProjectFile('src/main.jsx')
+  const legacySource = await readProjectFile('src/legacy.js')
+  const viteSource = await readProjectFile('vite.config.js')
 
-  assert.match(mainSource, /initialMarkup = await loadLegacyMarkup\(\)/)
+  assert.match(mainSource, /initialMarkup = loadLegacyMarkup\(\)/)
   assert.ok(
-    mainSource.indexOf('await loadLegacyMarkup()') <
-      mainSource.indexOf('createRoot('),
+    mainSource.indexOf('loadLegacyMarkup()') < mainSource.indexOf('createRoot('),
   )
   assert.match(mainSource, /flushSync\(\(\) =>/)
+  assert.doesNotMatch(mainSource, /await loadLegacyMarkup/)
+  assert.doesNotMatch(legacySource, /fetch\(/)
+  assert.match(
+    legacySource,
+    /from 'virtual:legacy-portfolio-markup'/,
+  )
+  assert.match(viteSource, /public\/legacy\/index\.html/)
+  assert.match(viteSource, /legacyMarkupPlugin\(\)/)
 })
 
 test('main portfolio exposes landmarks and named icon controls', async () => {

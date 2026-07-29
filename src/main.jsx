@@ -8,7 +8,7 @@ let initialMarkup = ''
 let initialError = ''
 
 try {
-  initialMarkup = await loadLegacyMarkup()
+  initialMarkup = loadLegacyMarkup()
 } catch (error) {
   initialError =
     error instanceof Error ? error.message : '포트폴리오를 불러오지 못했습니다.'
